@@ -19,6 +19,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.intersphinx',
     'myst_parser',
+    'sphinx_copybutton'
 ]
 
 # Template configuration
