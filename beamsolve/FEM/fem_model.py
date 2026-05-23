@@ -211,4 +211,26 @@ class FEMModel:
             x_nodes     = x_nodes,
         )
 
+    def element_stiffness(self):
+        le = self.Le
+        EI = self.beam.E*self.beam.I
+
+        Ke = EI/le**3*\
+        np.matrix([[12, 6*le, -12, 6*le],
+                  [6*le, 4*le**2, -6*le, 2*le**2],
+                  [-12, -6*le, 12, -6*le],
+                  [6*le, 2*le**2, -6*le, 4*le**2]])
+                    
+        return Ke
     
+    def element_mass(self):
+        le = self.Le
+        m = self.beam.rho*self.beam.A
+
+        Me = m*le/420*\
+        np.matrix([[156, 22*le, 54, -13*le],
+                   [22*le, 4*le**2, 13*le, -3*le**2],
+                   [54, 13*le, 156, -22*le],
+                   [-13*le, -3*le**2, -22*le, 4*le**2]])
+        
+        return Me
