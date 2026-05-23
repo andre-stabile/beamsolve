@@ -304,10 +304,38 @@
             <span class="n">Phi</span>         <span class="o">=</span> <span class="n">Phi</span><span class="p">,</span>
             <span class="n">x_nodes</span>     <span class="o">=</span> <span class="n">x_nodes</span><span class="p">,</span>
         <span class="p">)</span></div>
-</div>
 
+
+<div class="viewcode-block" id="FEMModel.element_stiffness">
+<a class="viewcode-back" href="../../../modules.html#beamsolve.FEM.fem_model.FEMModel.element_stiffness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">element_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Le</span>
+        <span class="n">EI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">beam</span><span class="o">.</span><span class="n">E</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">beam</span><span class="o">.</span><span class="n">I</span>
+
+        <span class="n">Ke</span> <span class="o">=</span> <span class="n">EI</span><span class="o">/</span><span class="n">le</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span>\
+        <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span>
+                  <span class="p">[</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+                    
+        <span class="k">return</span> <span class="n">Ke</span></div>
 
     
+<div class="viewcode-block" id="FEMModel.element_mass">
+<a class="viewcode-back" href="../../../modules.html#beamsolve.FEM.fem_model.FEMModel.element_mass">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">element_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Le</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">beam</span><span class="o">.</span><span class="n">rho</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">beam</span><span class="o">.</span><span class="n">A</span>
+
+        <span class="n">Me</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">le</span><span class="o">/</span><span class="mi">420</span><span class="o">*</span>\
+        <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">156</span><span class="p">,</span> <span class="mi">22</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="o">-</span><span class="mi">13</span><span class="o">*</span><span class="n">le</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">22</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">54</span><span class="p">,</span> <span class="mi">13</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="o">-</span><span class="mi">22</span><span class="o">*</span><span class="n">le</span><span class="p">],</span>
+                   <span class="p">[</span><span class="o">-</span><span class="mi">13</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">22</span><span class="o">*</span><span class="n">le</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">le</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+        
+        <span class="k">return</span> <span class="n">Me</span></div>
+</div>
+
 </pre></div>
 
            </div>
